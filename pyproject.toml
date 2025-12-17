@@ -7,7 +7,11 @@ readme = "README.md"
 license = "MIT"
 authors = [{ name = "Luiz Otávio Miranda" }]
 
-dependencies = ["fastapi>=0.124.4", "uvicorn>=0.38.0"]
+dependencies = [
+    "fastapi>=0.124.4",
+    "rich>=14.2.0",
+    "uvicorn>=0.38.0",
+]
 [dependency-groups]
 dev = []
 
@@ -18,14 +22,14 @@ Repository = "https://github.com/luizomf/dockeryt"
 Issues = "https://github.com/luizomf/dockeryt/issues"
 
 [project.scripts]
-dockeryt = "dockeryt.main:app"
+dockeryt = "dockeryt.main:home"
 
 [tool.ruff]
 line-length = 88
 target-version = "py314"
 fix = true
 show-fixes = true
-indent-width = 4
+indent-width = 2
 exclude = ["venv", ".venv", "env", ".env", "node_modules", "__pycache__"]
 
 [tool.ruff.lint]
