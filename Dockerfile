@@ -1,21 +1,19 @@
-FROM ghcr.io/astral-sh/uv:0.9.17-bookworm-slim AS builder
+FROM ghcr.io/astral-sh/uv:0.9.17-trixie-slim AS builder
 
-# Tenho dúvidas em todas essas variáveis de ambiente. Preciso dos detalhes técnicos
 ENV UV_COMPILE_BYTECODE=1 \
   UV_LINK_MODE=copy \
   UV_PYTHON_PREFERENCE=only-managed \
   UV_NO_DEV=1 \
   UV_PYTHON_INSTALL_DIR=/python
 
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* ;
+
+
 RUN uv python install 3.14.2 ;
 
-# I WILL REMOVE THESE LINES BELOW. IT IS JUST FOR DEVELOPMENT.
-# I CASE I DON'T, YOU MAY DO IT YOUR SELF. IT DOESNT DO ANYTHING
-# INTERESTING.
-RUN echo "\nset -o vi\nbind -m vi-insert '\"jj\": vi-movement-mode'" >> /root/.bashrc \
-  && echo "set show-mode-in-prompt on\nset vi-ins-mode-string " \
-    "\"\\e[32m(+)\\e[0m \"\nset vi-cmd-mode-string \"\\e[31m(-)\\e[0m \" \n" \
-  >> /root/.inputrc ;
 
 
 WORKDIR /app
@@ -31,4 +29,35 @@ RUN --mount=type=cache,target=/root/.cache/uv \
   uv sync --frozen ;
 
 ################################################################################
+
+FROM debian:trixie-slim AS development
+
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* ;
+
+RUN groupadd --system --gid 1000 python \
+  && useradd --system --gid 1000 --uid 1000 --create-home python ;
+
+# I WILL REMOVE THESE LINES BELOW. IT IS JUST FOR DEVELOPMENT.
+# I CASE I DON'T, YOU MAY DO IT YOUR SELF. IT DOESNT DO ANYTHING
+# INTERESTING.
+RUN echo "\nset -o vi\nbind -m vi-insert '\"jj\": vi-movement-mode'" | tee \
+  /root/.bashrc /home/python/.bashrc 2>/dev/null \
+  && echo 'set show-mode-in-prompt on\nset vi-ins-mode-string "+) " ' \
+  '\nset vi-cmd-mode-string "-) " ' | tee /root/.inputrc /home/python/.inputrc 2>/dev/null ;
+
+COPY --from=builder --chown=python:python /python /python
+COPY --from=builder --chown=python:python /app /app
+
+ENV PATH="/app/.venv/bin:${PATH}"
+
+USER python
+ENTRYPOINT []
+WORKDIR /app
+
+CMD ["uvicorn", "--host", "0", "--port", "8000", "src.dockeryt.main:app"]
 

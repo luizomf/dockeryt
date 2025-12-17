@@ -19,7 +19,7 @@ ENV UV_COMPILE_BYTECODE=1 \
 
 RUN uv python install 3.14.2
 
-WORKDIR=/app
+WORKDIR /app
 ```
 
 ---

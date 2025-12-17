@@ -6,8 +6,7 @@ app = FastAPI()
 
 
 @app.get("/")
-async def root() -> dict[str, str | int]:
-  print("123")
+async def home() -> dict[str, str | int]:
   return {
     "message": "Hello, world!",
     "now": datetime.now(tz=UTC).isoformat(),
