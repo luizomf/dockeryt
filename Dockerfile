@@ -36,9 +36,6 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* ;
 
-# Cria grupo e user 1000 (padrão Linux)
-# Define shell bash (pra você não entrar no container com sh capado)
-# Cria a home (pro cache do uv/pip funcionar)
 RUN groupadd --gid 1000 python \
   && useradd --uid 1000 --gid python --shell /bin/bash --create-home python ;
 
