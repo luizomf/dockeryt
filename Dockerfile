@@ -7,7 +7,7 @@ ENV UV_COMPILE_BYTECODE=1 \
   UV_PYTHON_INSTALL_DIR=/python
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
+  && apt-get install -y --no-install-recommends bash ca-certificates curl \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* ;
 
@@ -32,7 +32,7 @@ FROM debian:trixie-slim AS development
 ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
+  && apt-get install -y --no-install-recommends bash ca-certificates curl \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* ;
 
@@ -60,4 +60,3 @@ ENTRYPOINT []
 WORKDIR /app
 
 CMD ["uvicorn", "--host", "0", "--port", "8000", "src.dockeryt.main:app"]
-
