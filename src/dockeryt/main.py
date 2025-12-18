@@ -10,5 +10,5 @@ async def home() -> dict[str, str | int]:
   return {
     "message": "Hello, world!",
     "now": datetime.now(tz=UTC).isoformat(),
-    "counter": 2,
+    "counter": 1,
   }

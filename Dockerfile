@@ -11,10 +11,7 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* ;
 
-
 RUN uv python install 3.14.2 ;
-
-
 
 WORKDIR /app
 
@@ -39,11 +36,14 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* ;
 
-RUN groupadd --system --gid 1000 python \
-  && useradd --system --gid 1000 --uid 1000 --create-home python ;
+# Cria grupo e user 1000 (padrão Linux)
+# Define shell bash (pra você não entrar no container com sh capado)
+# Cria a home (pro cache do uv/pip funcionar)
+RUN groupadd --gid 1000 python \
+  && useradd --uid 1000 --gid python --shell /bin/bash --create-home python ;
 
 # I WILL REMOVE THESE LINES BELOW. IT IS JUST FOR DEVELOPMENT.
-# I CASE I DON'T, YOU MAY DO IT YOUR SELF. IT DOESNT DO ANYTHING
+# IN CASE I DON'T, YOU MAY DO IT YOUR SELF. IT DOESNT DO ANYTHING
 # INTERESTING.
 RUN echo "\nset -o vi\nbind -m vi-insert '\"jj\": vi-movement-mode'" | tee \
   /root/.bashrc /home/python/.bashrc 2>/dev/null \
