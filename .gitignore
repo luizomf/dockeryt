@@ -5,13 +5,23 @@ _data/
 *.sqlite3
 _localcode
 __localcode
-.env 
-.env.*
 model_cache/
 TEMP.md
 TMP.md
 
-# Virtual environments
+# Environments
+.env
+.venv
+venv/*
+env.bak/*
+venv.bak/*
+ENV/*
+env/*
+.env
+.env.*
+# THIS FILE SHOULD TO TO THE REPOSITORY AS AN EXAMPLE
+!env/.env.example
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[oc]
@@ -25,7 +35,7 @@ wheels/
 *.so
 
 # Distribution / packaging
-.Python
+ .Python
 build/
 develop-eggs/
 dist/
@@ -110,7 +120,7 @@ ipython_config.py
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
-#Pipfile.lock
+# Pipfile.lock
 
 # UV
 #   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
@@ -136,24 +146,15 @@ ipython_config.py
 .pdm-python
 .pdm-build/
 
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
+# # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+# __pypackages__/
+#
+# # Celery stuff
+# celerybeat-schedule
+# celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -211,3 +212,4 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
