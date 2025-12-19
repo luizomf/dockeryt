@@ -7,7 +7,7 @@ ENV UV_COMPILE_BYTECODE=1 \
   UV_PYTHON_INSTALL_DIR=/python
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends bash ca-certificates curl \
+  && apt-get install -y --no-install-recommends build-essential \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* ;
 
@@ -32,7 +32,7 @@ FROM debian:trixie-slim AS development
 ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends bash ca-certificates curl \
+  && apt-get install -y --no-install-recommends build-essential \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* ;
 
