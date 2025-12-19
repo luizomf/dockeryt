@@ -42,10 +42,10 @@ RUN groupadd --gid 1000 python \
 # I WILL REMOVE THESE LINES BELOW. IT IS JUST FOR DEVELOPMENT.
 # IN CASE I DON'T, YOU MAY DO IT YOUR SELF. IT DOESNT DO ANYTHING
 # INTERESTING.
-RUN echo "\nset -o vi\nbind -m vi-insert '\"jj\": vi-movement-mode'" | tee \
-  /root/.bashrc /home/python/.bashrc 2>/dev/null \
-  && echo 'set show-mode-in-prompt on\nset vi-ins-mode-string "+) " ' \
-  '\nset vi-cmd-mode-string "-) " ' | tee /root/.inputrc /home/python/.inputrc 2>/dev/null ;
+# RUN echo "\nset -o vi\nbind -m vi-insert '\"jj\": vi-movement-mode'" | tee \
+#   /root/.bashrc /home/python/.bashrc 2>/dev/null \
+#   && echo 'set show-mode-in-prompt on\nset vi-ins-mode-string "+) " ' \
+#   '\nset vi-cmd-mode-string "-) " ' | tee /root/.inputrc /home/python/.inputrc 2>/dev/null ;
 
 COPY --from=builder --chown=python:python /python /python
 COPY --from=builder --chown=python:python /app /app
