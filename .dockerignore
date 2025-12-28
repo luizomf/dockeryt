@@ -1,5 +1,6 @@
 # ADDED
 _data/
+# scripts/
 Dockerfile*
 *compose*.yaml
 *compose*.yml
@@ -7,6 +8,7 @@ Dockerfile*
 model_cache/
 TEMP.md
 TMP.md
+temp/
 
 # Git
 .git
