@@ -26,6 +26,7 @@ env/*
 .env.*
 # THIS FILE SHOULD TO TO THE REPOSITORY AS AN EXAMPLE
 !env/.env.example
+!.env.example
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
