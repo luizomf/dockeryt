@@ -334,7 +334,7 @@ That is it.
 
 ---
 
-## Docker instalation
+## Docker installation
 
 There is no secrets here. I'm following Docker's documentation:
 
@@ -343,7 +343,7 @@ There is no secrets here. I'm following Docker's documentation:
 As of today (Dec 28, 2025), it goes like this:
 
 ```sh
-# Remove any previous instalations
+# Remove any previous installations
 sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc | cut -f1)
 
 # Add Docker's official GPG key:
