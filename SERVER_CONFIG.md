@@ -92,7 +92,7 @@ cat /etc/group # shows groups and member users
 
 # Let's add all the users to the "project" group
 sudo usermod -aG project github
-sudo usermod -aG project YOUR_USER
+sudo usermod -aG project $USER # your user
 
 # If you want to test the GitHub user
 sudo passwd github # set its password
@@ -206,12 +206,15 @@ sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 sudo nano /etc/fail2ban/jail.local
 
 # Copy, paste and uncomment all lines below
+#
 # [sshd]
+#
 # enabled = true
-# port = ssh # or 22
+# port = ssh
 # maxretry = 1
 # bantime = 24h
-# # 🛑 It ends here and this is just a comment that can be deleted
+#
+# # 🛑 END. YOU MUST DELETE THIS
 
 # Restart Fail2Ban service
 sudo systemctl restart fail2ban
@@ -328,5 +331,59 @@ Now, just test your server's external IP or domains in your browser with:
 You should see "Hello, world!" on your browser.
 
 That is it.
+
+---
+
+## Docker instalation
+
+There is no secrets here. I'm following Docker's documentation:
+
+- [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+
+As of today (Dec 28, 2025), it goes like this:
+
+```sh
+# Remove any previous instalations
+sudo apt remove $(dpkg --get-selections docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc | cut -f1)
+
+# Add Docker's official GPG key:
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+# Update and install
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Now you can check the installation
+sudo systemctl status docker
+
+# For me, the service was "active", but you can start if it is not
+sudo systemctl start docker
+
+# DOCKER COMMANDS REQUIRE SUDO ON LINUX
+# If you wish to use docker without "sudo", add you user to "docker" group
+sudo usermod -aG docker $USER
+# We have the GitHub user as well
+sudo usermod -aG docker github
+
+# Maybe you should reboot the server to see if the service will start on its own (I will)
+
+# After all that, if you want to test it out
+docker run --rm hello-world
+
+# Now clean
+```
 
 ---
